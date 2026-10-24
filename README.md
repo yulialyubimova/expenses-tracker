@@ -120,6 +120,24 @@ The default expense file is `data/expenses.json`. The budget file is `data/budge
 
 Environment variables must be set in the environment before starting the application.
 
+## Health Check, Version, and Logs
+
+After starting the application, open these URLs in your browser:
+
+* `http://127.0.0.1:8000/health` — check whether the service is running.
+* `http://127.0.0.1:8000/version` — check the application version.
+* `http://127.0.0.1:8000/docs` — explore and test API endpoints interactively.
+
+The application logs are written to the terminal where Uvicorn is running. They include application startup and shutdown, HTTP requests, expense and budget operations, and errors.
+
+## Troubleshooting
+
+* **The server does not start:** make sure the virtual environment is activated and dependencies are installed with `python -m pip install -r requirements-dev.txt`.
+* **Port 8000 is already in use:** stop the other process using that port or start the application on another port, for example `python -m uvicorn app_final:app --port 8001`.
+* **The API returns a validation error:** check the request body and the required fields in `/docs`.
+* **Saved data is missing:** check the configured `EXPENSES_FILE` path and the JSON files in the `data` directory.
+* **Tests fail:** run `python -m pytest -v` and inspect the error output.
+
 ## Run Tests
 
 Run all automated tests:

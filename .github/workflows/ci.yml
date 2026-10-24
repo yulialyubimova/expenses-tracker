@@ -24,3 +24,15 @@ jobs:
 
       - name: Run tests
         run: python -m pytest -v
+
+      - name: Upload application artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: expense-tracker-app
+          path: |
+            app_final.py
+            test_app.py
+            requirements.txt
+            requirements-dev.txt
+            README.md
+            .env.example

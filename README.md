@@ -1,90 +1,146 @@
-# Expense Tracker API
+# Expense Tracker API — учёт расходов и бюджета
 
-A REST API for managing personal expenses and tracking a budget, built with FastAPI and Pydantic.
+## Описание проекта
 
-## Features
+Expense Tracker — это REST API для учёта личных расходов и управления бюджетом. Проект написан на Python с использованием FastAPI и Pydantic.
 
-* Create, list, retrieve, update, and delete expenses
-* Filter expenses by category
-* Calculate expense summaries and statistics
-* Group expenses by category
-* Set and retrieve a budget
-* Calculate remaining budget and percentage spent
-* Validate incoming data using Pydantic
-* Store expenses and budget in JSON files
-* Load saved data when the application starts
-* Log HTTP requests and application events
-* Health check and application version endpoints
-* Automated tests with pytest
+С помощью приложения можно добавлять, просматривать, изменять и удалять расходы, получать статистику, а также устанавливать и просматривать бюджет.
 
-## Requirements
+## Возможности
 
-* Python 3.10 or newer
-* pip
+* Добавление, просмотр, изменение и удаление расходов.
+* Фильтрация расходов по категориям.
+* Получение сводки и статистики расходов.
+* Группировка расходов по категориям.
+* Просмотр и изменение бюджета.
+* Расчёт остатка бюджета и процента потраченных средств.
+* Проверка входных данных с помощью Pydantic.
+* Сохранение расходов и бюджета в JSON-файлах.
+* Загрузка сохранённых данных при запуске приложения.
+* Журналирование запросов и событий приложения.
+* Проверка работоспособности и получение версии приложения.
+* Автоматические тесты с использованием pytest.
 
-## Installation
+## Требования
 
-Clone the repository and navigate to the project directory.
+Для запуска проекта необходимы:
 
-Create and activate a virtual environment:
+* Python 3.10 или новее.
+* pip — инструмент для установки библиотек.
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+## Установка и запуск
 
-Install the dependencies:
+### Вариант 1. Windows
 
-```bash
-python -m pip install -r requirements-dev.txt
-```
+1. Скачайте репозиторий с GitHub или клонируйте его:
 
-## Run the application
+   ```powershell
+   git clone https://github.com/yulialyubimova/expenses-tracker.git
+   ```
 
-Start the API server:
+2. Перейдите в папку проекта:
 
-```bash
-python -m uvicorn app_final:app
-```
+   ```powershell
+   cd expenses-tracker
+   ```
 
-Open the interactive API documentation:
+3. Создайте виртуальное окружение:
+
+   ```powershell
+   python -m venv .venv
+   ```
+
+4. Активируйте виртуальное окружение:
+
+   ```powershell
+   .venv\Scripts\Activate.ps1
+   ```
+
+5. Установите необходимые библиотеки:
+
+   ```powershell
+   python -m pip install -r requirements-dev.txt
+   ```
+
+6. Запустите приложение:
+
+   ```powershell
+   python -m uvicorn app_final:app
+   ```
+
+Если PowerShell не разрешает активировать виртуальное окружение, можно использовать командную строку Windows или обратиться к инструкции по настройке PowerShell.
+
+### Вариант 2. Linux или Ubuntu в WSL
+
+1. Клонируйте репозиторий:
+
+   ```bash
+   git clone https://github.com/yulialyubimova/expenses-tracker.git
+   ```
+
+2. Перейдите в папку проекта:
+
+   ```bash
+   cd expenses-tracker
+   ```
+
+3. Создайте и активируйте виртуальное окружение:
+
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+4. Установите зависимости:
+
+   ```bash
+   python -m pip install -r requirements-dev.txt
+   ```
+
+5. Запустите приложение:
+
+   ```bash
+   python -m uvicorn app_final:app
+   ```
+
+После запуска интерактивная документация API доступна по адресу:
 
 http://127.0.0.1:8000/docs
 
-## API Endpoints
+## Маршруты API
 
-| Method | Endpoint                 | Description               |
-| ------ | ------------------------ | ------------------------- |
-| GET    | `/`                      | Welcome message           |
-| GET    | `/health`                | Check application status  |
-| GET    | `/version`               | Get application version   |
-| GET    | `/expenses`              | List expenses             |
-| POST   | `/expenses`              | Create an expense         |
-| GET    | `/expenses/summary`      | Get expense summary       |
-| GET    | `/expenses/stats`        | Get expense statistics    |
-| GET    | `/expenses/{expense_id}` | Retrieve an expense by ID |
-| PUT    | `/expenses/{expense_id}` | Update an expense         |
-| DELETE | `/expenses/{expense_id}` | Delete an expense         |
-| GET    | `/budget`                | Get budget information    |
-| PUT    | `/budget`                | Update the budget         |
+| Метод  | Маршрут                  | Назначение                            |
+| ------ | ------------------------ | ------------------------------------- |
+| GET    | `/`                      | Приветственное сообщение              |
+| GET    | `/health`                | Проверка работоспособности приложения |
+| GET    | `/version`               | Получение версии приложения           |
+| GET    | `/expenses`              | Получение списка расходов             |
+| POST   | `/expenses`              | Добавление расхода                    |
+| GET    | `/expenses/summary`      | Получение сводки расходов             |
+| GET    | `/expenses/stats`        | Получение статистики расходов         |
+| GET    | `/expenses/{expense_id}` | Получение расхода по идентификатору   |
+| PUT    | `/expenses/{expense_id}` | Изменение расхода                     |
+| DELETE | `/expenses/{expense_id}` | Удаление расхода                      |
+| GET    | `/budget`                | Получение информации о бюджете        |
+| PUT    | `/budget`                | Изменение бюджета                     |
 
-## Example: Create an Expense
+## Пример добавления расхода
 
-Send a POST request to `/expenses` with the following JSON body:
+Для создания расхода отправьте POST-запрос на `/expenses` с JSON-телом:
 
 ```json
 {
-  "title": "Groceries",
+  "title": "Покупка продуктов",
   "amount": 450.5,
-  "category": "Food"
+  "category": "Еда"
 }
 ```
 
-The API validates the input and returns the created expense with its assigned ID.
+Приложение проверяет входные данные и возвращает созданный расход с присвоенным идентификатором.
 
-## Example: Update the Budget
+## Пример изменения бюджета
 
-Send a PUT request to `/budget` with the following JSON body:
+Для изменения бюджета отправьте PUT-запрос на `/budget`:
 
 ```json
 {
@@ -92,62 +148,76 @@ Send a PUT request to `/budget` with the following JSON body:
 }
 ```
 
-The budget must be greater than zero.
+Бюджет должен быть больше нуля.
 
-The `GET /budget` endpoint returns the configured budget, total recorded expenses, remaining budget, percentage used, and whether the recorded expenses exceed the budget.
+Маршрут `GET /budget` возвращает установленный бюджет, сумму записанных расходов, остаток бюджета, процент использования и информацию о превышении бюджета.
 
-**Note:** The current implementation calculates spending from all expenses stored in the application. It does not yet filter expenses by calendar month.
+**Примечание:** текущая реализация учитывает все сохранённые расходы и пока не фильтрует их по календарному месяцу.
 
-## Data Storage
+## Хранение данных
 
-The application stores data in JSON files:
+Приложение сохраняет данные в JSON-файлах:
 
-* `data/expenses.json` — expense records
-* `data/budget.json` — configured budget
+* `data/expenses.json` — записи о расходах.
+* `data/budget.json` — информация о бюджете.
 
-The application loads saved data at startup and saves changes to the corresponding files.
+Сохранённые данные загружаются при запуске приложения. При необходимости папка `data` и файлы создаются автоматически.
 
-The data directory and files are created automatically when needed.
+Эти файлы исключены из Git с помощью `.gitignore`, чтобы снизить риск случайной публикации личных финансовых данных.
 
-These data files are excluded from Git through `.gitignore` to help prevent personal financial information from being committed accidentally.
+## Настройки приложения
 
-## Configuration
+Для настройки используются переменные окружения:
 
-* `APP_VERSION` sets the application version. Default: `1.0.0`.
-* `EXPENSES_FILE` sets the path to the expense JSON file.
+* `APP_VERSION` — версия приложения. Значение по умолчанию: `1.0.0`.
+* `EXPENSES_FILE` — путь к JSON-файлу расходов.
 
-The default expense file is `data/expenses.json`. The budget file is `data/budget.json`.
+По умолчанию расходы сохраняются в `data/expenses.json`, а бюджет — в `data/budget.json`.
 
-Environment variables must be set in the environment before starting the application.
+Переменные окружения нужно задать до запуска приложения.
 
-## Health Check, Version, and Logs
+## Проверка работоспособности и журналирование
 
-After starting the application, open these URLs in your browser:
+После запуска приложения доступны следующие адреса:
 
-* `http://127.0.0.1:8000/health` — check whether the service is running.
-* `http://127.0.0.1:8000/version` — check the application version.
-* `http://127.0.0.1:8000/docs` — explore and test API endpoints interactively.
+* http://127.0.0.1:8000/health — проверка работоспособности.
+* http://127.0.0.1:8000/version — получение версии приложения.
+* http://127.0.0.1:8000/docs — интерактивная документация API.
 
-The application logs are written to the terminal where Uvicorn is running. They include application startup and shutdown, HTTP requests, expense and budget operations, and errors.
+Журнал событий выводится в терминал, в котором запущен Uvicorn. Он содержит сообщения о запуске и остановке приложения, HTTP-запросах, операциях с расходами и бюджетом, а также ошибках.
 
-## Troubleshooting
+## Запуск автоматических тестов
 
-* **The server does not start:** make sure the virtual environment is activated and dependencies are installed with `python -m pip install -r requirements-dev.txt`.
-* **Port 8000 is already in use:** stop the other process using that port or start the application on another port, for example `python -m uvicorn app_final:app --port 8001`.
-* **The API returns a validation error:** check the request body and the required fields in `/docs`.
-* **Saved data is missing:** check the configured `EXPENSES_FILE` path and the JSON files in the `data` directory.
-* **Tests fail:** run `python -m pytest -v` and inspect the error output.
-
-## Run Tests
-
-Run all automated tests:
+Установите зависимости для разработки и выполните:
 
 ```bash
 python -m pytest -v
 ```
 
-The tests use temporary files to avoid modifying the application's real expense and budget data.
+Тесты используют временные файлы, чтобы не изменять основные файлы расходов и бюджета.
 
-## License
+## Возможные проблемы
 
-This project was created for educational purposes.
+* **Сервер не запускается.** Проверьте, активировано ли виртуальное окружение и установлены ли зависимости.
+
+* **Порт 8000 уже занят.** Остановите другой сервер или запустите приложение на другом порту:
+
+  ```bash
+  python -m uvicorn app_final:app --port 8001
+  ```
+
+* **API возвращает ошибку проверки данных.** Проверьте тело запроса и обязательные поля в `/docs`.
+
+* **Не найдены сохранённые данные.** Проверьте путь `EXPENSES_FILE` и JSON-файлы в папке `data`.
+
+* **Тесты завершились с ошибкой.** Запустите `python -m pytest -v` и изучите сообщение об ошибке.
+
+## Репозиторий
+
+Исходный код проекта и история изменений доступны на GitHub:
+
+https://github.com/yulialyubimova/expenses-tracker
+
+## Назначение работы
+
+Проект создан в учебных целях для практики разработки REST API на FastAPI, работы с JSON-файлами, автоматического тестирования и настройки CI с помощью GitHub Actions.
